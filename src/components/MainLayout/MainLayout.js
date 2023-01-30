@@ -7,7 +7,7 @@ import {
 import { Layout, Menu, theme } from 'antd';
 import {AiOutlineDashboard, AiOutlineShoppingCart, AiOutlineUser} from 'react-icons/ai'
 import {IoIosNotifications} from 'react-icons/io'
-import { Outlet, useNavigate } from 'react-router-dom';
+import { Link, Outlet, useNavigate } from 'react-router-dom';
 import UserAvatar from '../../assets/images/avatar5.jpg'
 const { Header, Sider, Content } = Layout;
 
@@ -136,23 +136,23 @@ const MainLayout = () => {
           />
         </Sider>
         <Layout className="site-layout">
-          <Header className='d-flex justify-content-between ps-1 pe-5' style={{ padding: 0, background: colorBgContainer }}>
-            {React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
-              className: 'trigger',
-              onClick: () => setCollapsed(!collapsed),
-            })}
+          <Header className='d-flex justify-content-end ps-1 pe-5' style={{ padding: 0, background: colorBgContainer }}>
             <div className="d-flex gap-3 align-items-center">
               <div className='icon-notifications position-relative'> 
                 <IoIosNotifications/> 
                 <span className='badge bg-danger p-1 position-absolute'>3</span>
               </div>
-              <div className="d-flex gap-3 align-items-center">
+              <div className="d-flex gap-3 align-items-center dropdown">
                 <div  className='avatar'> 
                   <img className='img-fluid' src={UserAvatar} alt="" />
                 </div>
-                <div>
+                <div role="button" data-bs-toggle="dropdown" aria-expanded="false">
                   <h5 className='m-0'>Bui Van Duy Nhat</h5>
                   <p className='m-0 p-0'>buivanduynhat@gmail.com</p>
+                </div>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  <Link class="dropdown-item" to="/">View Profile</Link>
+                  <Link class="dropdown-item" to="/">Sign out</Link>
                 </div>
               </div>
             </div>

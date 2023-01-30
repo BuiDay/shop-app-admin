@@ -1,7 +1,6 @@
 import React from 'react';
 import { Button, Table } from 'antd';
 
-
 const columns = [
     {
       title: 'SNo',
@@ -29,11 +28,10 @@ const columns = [
       product: `London, Park Lane no. ${i}`,
     });
   }
-
-const Enquiries = () => {
+const ColorList = () => {
     return (
         <div>
-            <h3 className='mb-4'>Enquiries</h3>
+            <h3 className='mb-4'>Color List</h3>
             <div>
                 <Table columns={columns} dataSource={data} />
             </div>
@@ -41,4 +39,4 @@ const Enquiries = () => {
     );
 };
 
-export default Enquiries;
+export default ColorList;
