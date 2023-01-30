@@ -1,0 +1,83 @@
+.ant-layout{
+    min-height:100vh;
+}
+
+.trigger {
+    padding: 0 24px;
+    font-size: 18px;
+    line-height: 64px;
+    cursor: pointer;
+    transition: color 0.3s;
+  }
+  
+  .trigger:hover {
+    color: #1890ff;
+  }
+  
+  .logo {
+    height: 64px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    /* background: #fffd33; */
+    color: white;
+  }
+
+  main{
+    overflow-y: scroll;
+    background-color: transparent !important;
+    height:80vh;
+  }
+
+  main::-webkit-scrollbar{
+    width: 0px;
+  }
+
+  .ant-layout-sider{
+    flex: 0 0 250px !important;
+    max-width: 250px !important;
+    min-width: 250px !important;
+    width: 250px !important;
+  }
+
+
+  .ant-layout-sider-collapsed{
+    flex: 0 0 90px !important;
+    max-width: 90px !important;
+    min-width: 90px !important;
+    width: 90px !important;
+  }
+
+  .ant-menu-title-content{
+    font-size: 16px;
+  }
+
+  .ant-layout .ant-layout-header{
+    line-height: 20px;
+  }
+
+  .avatar{
+    height: 45px;
+    width: 45px;
+    border-radius: 50%;
+    overflow: hidden;
+  }
+
+  .ant-layout-header h5{
+    font-size: 14px;
+  }
+
+  .ant-layout-header p{
+    font-size: 13px;
+  }
+
+  .ant-layout-header .icon-notifications svg{
+    font-size: 30px;
+  }
+
+  .ant-layout-header .icon-notifications .badge{
+    top:-5px;
+    right: 0;
+    border-radius: 50%;
+  }
