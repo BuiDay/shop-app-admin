@@ -5,7 +5,10 @@ import {
   MenuUnfoldOutlined,
 } from '@ant-design/icons';
 import { Layout, Menu, theme } from 'antd';
-import {AiOutlineDashboard, AiOutlineShoppingCart, AiOutlineUser} from 'react-icons/ai'
+import {AiOutlineDashboard, AiOutlineShoppingCart, AiOutlineUser,} from 'react-icons/ai'
+import {SiBrandfolder,SiBloglovin} from 'react-icons/si'
+import {BiCategoryAlt,BiColorFill} from 'react-icons/bi'
+import {FaClipboardList,FaPen,FaClipboard} from 'react-icons/fa'
 import {IoIosNotifications} from 'react-icons/io'
 import { Link, Outlet, useNavigate } from 'react-router-dom';
 import UserAvatar from '../../assets/images/avatar5.jpg'
@@ -66,70 +69,70 @@ const MainLayout = () => {
                   },
                   {
                     key: 'brand',
-                    icon: <AiOutlineShoppingCart className='fs-4'/>,
+                    icon: <SiBrandfolder className='fs-4'/>,
                     label: 'Brand',
                   },
                   {
                     key: 'brand-list',
-                    icon: <AiOutlineShoppingCart className='fs-4'/>,
+                    icon: <SiBrandfolder className='fs-4'/>,
                     label: 'Brand List',
                   },
                   {
                     key: 'category',
-                    icon: <AiOutlineShoppingCart className='fs-4'/>,
+                    icon: <BiCategoryAlt className='fs-4'/>,
                     label: 'Category',
                   },
                   {
                     key: 'category-list',
-                    icon: <AiOutlineShoppingCart className='fs-4'/>,
+                    icon: <BiCategoryAlt className='fs-4'/>,
                     label: 'Category List',
                   },
                   {key: 'color',
-                    icon: <AiOutlineShoppingCart className='fs-4'/>,
+                    icon: <BiColorFill className='fs-4'/>,
                     label: 'Color',
                   },
                   {
                     key: 'color-list',
-                    icon: <AiOutlineShoppingCart className='fs-4'/>,
+                    icon: <BiColorFill className='fs-4'/>,
                     label: 'Color List',
                   },
                 ]
               },
               {
                 key: 'orders',
-                icon: <AiOutlineUser className='fs-4'/>,
+                icon: <FaClipboardList className='fs-4'/>,
                 label: 'Orders',
               },
               {
                 key: 'blogs',
-                icon: <AiOutlineUser className='fs-4'/>,
+                icon: <SiBloglovin className='fs-4'/>,
                 label: 'Blogs',
                 children:[
                   {
                     key: 'blog',
-                    icon: <AiOutlineUser className='fs-4'/>,
+                    icon: <SiBloglovin className='fs-4'/>,
                     label: 'Add Blog',
                   },
                   {
                     key: 'blog-list',
-                    icon: <AiOutlineUser className='fs-4'/>,
+                    icon: <SiBloglovin className='fs-4'/>,
                     label: 'Blog List',
                   },
                   {
                     key: 'blog-category',
-                    icon: <AiOutlineUser className='fs-4'/>,
+                    icon: <FaPen className='fs-4'/>,
                     label: 'Add Blog Category',
                   },
                   {
                     key: 'blog-category-list',
-                    icon: <AiOutlineUser className='fs-4'/>,
+                    icon: <FaPen className='fs-4'/>,
                     label: 'Blog Category List',
                   },
                 ]
               },
               {
                 key: 'enquiries',
-                icon: <AiOutlineUser className='fs-4'/>,
+                icon: <FaClipboard className='fs-4'/>,
                 label: 'Enquiries',
               },
             ]}

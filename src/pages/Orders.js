@@ -1,5 +1,8 @@
 import React from 'react';
 import { Button, Table } from 'antd';
+import {BiEdit} from "react-icons/bi"
+import {AiFillDelete} from 'react-icons/ai'
+import { Link } from 'react-router-dom';
 
 const columns = [
     {
@@ -18,14 +21,30 @@ const columns = [
         title: 'Status',
         dataIndex: 'status',
     },
+  
+    {
+      title: 'Action',
+      dataIndex: 'action',
+    },
+
   ];
   const data = [];
-  for (let i = 0; i < 46; i++) {
+  for (let i = 0; i < 4; i++) {
     data.push({
       key: i,
-      name: `Edward King ${i}`,
-      status: "Watch",
-      product: `London, Park Lane no. ${i}`,
+      name: `Bui Nhat ${i}`,
+      status: "Delivery",
+      product: `Apple Watch Series6 ${i}`,
+      action:(
+        <>
+        <Link to="/" className='fs-3 text-success me-3'>
+          <BiEdit style={{fontSize:"20px"}}/>
+        </Link>
+        <Link to="/" className='fs-3 text-danger' >
+          <AiFillDelete style={{fontSize:"20px"}}/>
+        </Link>
+        </>
+      )
     });
   }
 
