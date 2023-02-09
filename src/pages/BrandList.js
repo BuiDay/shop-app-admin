@@ -20,15 +20,6 @@ const columns = [
       dataIndex: 'action',
     }
   ];
-  const data = [];
-  for (let i = 0; i < 46; i++) {
-    data.push({
-      key: i,
-      name: `Edward King ${i}`,
-      status: "Watch",
-      product: `London, Park Lane no. ${i}`,
-    });
-  }
 const BrandList = () => {
   const dispatch = useDispatch();
   useEffect(()=>{

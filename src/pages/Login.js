@@ -20,7 +20,6 @@ const Login = () => {
           }),
         onSubmit: values => {
             dispatch(login(values))
-            alert(JSON.stringify(values, null, 2));
         },
       });
 

@@ -1,8 +1,10 @@
-import React from 'react';
+import React,{useEffect}  from 'react';
 import { Button, Table } from 'antd';
 import {BiEdit} from "react-icons/bi"
 import {AiFillDelete} from 'react-icons/ai'
 import { Link } from 'react-router-dom';
+import { useDispatch,useSelector } from 'react-redux';
+import { getOrders } from '../features/auth/authSlice';
 
 const columns = [
     {
@@ -11,30 +13,51 @@ const columns = [
     },
     {
       title: 'Name',
-      dataIndex: 'name',
+      dataIndex: 'title',
     },
     {
       title: 'Product',
       dataIndex: 'product',
     },
     {
-        title: 'Status',
-        dataIndex: 'status',
+        title: 'Amount',
+        dataIndex: 'amount',
     },
-  
+    {
+      title: 'Date',
+      dataIndex: 'date',
+    },
     {
       title: 'Action',
       dataIndex: 'action',
     },
 
   ];
+
+const Orders = () => {
+  const dispatch = useDispatch();
+  useEffect(()=>{
+    dispatch(getOrders())  
+  },[])
+
+  const ordersState = useSelector(state => state.auth.orders);
   const data = [];
-  for (let i = 0; i < 4; i++) {
+  console.log(ordersState)
+  for (let i = 0; i < ordersState.length; i++) {
     data.push({
-      key: i,
-      name: `Bui Nhat ${i}`,
-      status: "Delivery",
-      product: `Apple Watch Series6 ${i}`,
+      key: i+1,
+      title: ordersState[i].orderby.firstName +" " + ordersState[i].orderby.lastName,
+      product:ordersState[i].products.map((i,j)=>{
+        return(
+          <>
+            <ul key={j}>
+              <li>{i.product.title}</li>
+            </ul>
+          </>
+        )
+      }),
+      amount:"$ " + ordersState[i].paymentIntent.amout,
+      date: new Date(ordersState[i].createdAt.toString()).toLocaleString(),
       action:(
         <>
         <Link to="/" className='fs-3 text-success me-3'>
@@ -47,8 +70,6 @@ const columns = [
       )
     });
   }
-
-const Orders = () => {
     return (
         <div>
             <h3 className='mb-4'>Order</h3>

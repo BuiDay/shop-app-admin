@@ -153,9 +153,9 @@ const MainLayout = () => {
                   <h5 className='m-0'>Bui Van Duy Nhat</h5>
                   <p className='m-0 p-0'>buivanduynhat@gmail.com</p>
                 </div>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                  <Link class="dropdown-item" to="/">View Profile</Link>
-                  <Link class="dropdown-item" to="/">Sign out</Link>
+                <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  <Link className="dropdown-item" to="/">View Profile</Link>
+                  <Link className="dropdown-item" to="/">Sign out</Link>
                 </div>
               </div>
             </div>

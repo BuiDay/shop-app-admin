@@ -15,6 +15,7 @@ const userDefaultState={
 
 const initialState = {
     user:getUserFormLocalStorage,
+    orders:[],
     isError:false,
     isLoading:false,
     isSuccess:false,
@@ -24,6 +25,14 @@ const initialState = {
 export const login = createAsyncThunk("auth/admin-login",async(user,thunkAPI)=>{
     try{
         return await authService.login(user)
+    }catch(err){
+       return thunkAPI.rejectWithValue(err)
+    }
+})
+
+export const getOrders = createAsyncThunk("order/get-order",async(user,thunkAPI)=>{
+    try{
+        return await authService.getOrders()
     }catch(err){
        return thunkAPI.rejectWithValue(err)
     }
@@ -49,6 +58,22 @@ export const authSlice = createSlice({
             state.isError = true;
             state.message = "Rejected";
             state.user = null
+        })
+        .addCase(getOrders.pending,(state)=>{
+            state.isLoading = true;
+        })
+        .addCase(getOrders.fulfilled,(state,action)=>{
+            state.isLoading = false;
+            state.isSuccess = true;
+            state.isError = false;
+            state.orders = action.payload.data;
+        })
+        .addCase(getOrders.rejected,(state,action)=>{
+            state.isLoading = false;
+            state.isSuccess = false;
+            state.isError = true;
+            state.message = action.error;
+            state.orders = null
         })
     },
 })
