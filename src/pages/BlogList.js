@@ -33,7 +33,7 @@ const BlogList = () => {
 
   const blogState = useSelector(state => state.blogs.blogs);
   const data = [];
-  for (let i = 0; i < blogState.length; i++) {
+  for (let i = 0; i < blogState?.length; i++) {
     data.push({
       key: i+1,
       title: blogState[i].title,

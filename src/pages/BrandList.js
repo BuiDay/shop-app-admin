@@ -29,13 +29,13 @@ const BrandList = () => {
   const brandState = useSelector(state => state.brand.brands);
 
   const data = [];
-  for (let i = 0; i < brandState.length; i++) {
+  for (let i = 0; i < brandState?.length; i++) {
     data.push({
       key: i+1,
       title: brandState[i].title,
       action:(
         <>
-        <Link to="/" className='fs-3 text-success me-3'>
+        <Link to={`/admin/brand/${brandState[i]._id}`} className='fs-3 text-success me-3'>
           <BiEdit style={{fontSize:"20px"}}/>
         </Link>
         <Link to="/" className='fs-3 text-danger' >

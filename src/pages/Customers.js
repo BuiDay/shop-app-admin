@@ -39,7 +39,7 @@ const Customers = () => {
   const customerState = useSelector(state => state.customer.customers);
 
   const data = [];
-  for (let i = 0; i < customerState.length; i++) {
+  for (let i = 0; i < customerState?.length; i++) {
     data.push({
       key: i+1,
       name: customerState[i].firstName +" "+ customerState[i].lastName ,

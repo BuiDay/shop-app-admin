@@ -37,7 +37,13 @@ export const getOrders = createAsyncThunk("order/get-order",async(user,thunkAPI)
        return thunkAPI.rejectWithValue(err)
     }
 })
-
+export const updateOrders = createAsyncThunk("order/update-order",async(data,thunkAPI)=>{
+    try{
+        return await authService.updateOrders(data)
+    }catch(err){
+       return thunkAPI.rejectWithValue(err)
+    }
+})
 export const authSlice = createSlice({
     name:"auth",
     initialState,
@@ -74,6 +80,20 @@ export const authSlice = createSlice({
             state.isError = true;
             state.message = action.error;
             state.orders = null
+        })
+        .addCase(updateOrders.pending,(state)=>{
+            state.isLoading = true;
+        })
+        .addCase(updateOrders.fulfilled,(state,action)=>{
+            state.isLoading = false;
+            state.isSuccess = true;
+            state.isError = false;
+        })
+        .addCase(updateOrders.rejected,(state,action)=>{
+            state.isLoading = false;
+            state.isSuccess = false;
+            state.isError = true;
+            state.message = action.error;
         })
     },
 })

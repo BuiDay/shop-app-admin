@@ -50,7 +50,7 @@ const ProductList = () => {
   const productState = useSelector(state => state.product.products);
 
   const data = [];
-  for (let i = 0; i < productState.length; i++) {
+  for (let i = 0; i < productState?.length; i++) {
     data.push({
       key: i+1,
       title: productState[i].title,

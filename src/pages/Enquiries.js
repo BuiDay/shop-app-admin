@@ -1,6 +1,10 @@
-import React from 'react';
+import React,{useEffect} from 'react';
 import { Button, Table } from 'antd';
-
+import { useDispatch,useSelector } from 'react-redux';
+import { getEnq } from '../features/enquiry/enquirySilce';
+import {BiEdit} from "react-icons/bi"
+import {AiFillDelete} from 'react-icons/ai'
+import { Link } from 'react-router-dom';
 
 const columns = [
     {
@@ -9,28 +13,60 @@ const columns = [
     },
     {
       title: 'Name',
-      dataIndex: 'name',
+      dataIndex: 'title',
     },
     {
-      title: 'Product',
-      dataIndex: 'product',
+      title: 'Email',
+      dataIndex: 'email',
     },
     {
-        title: 'Status',
-        dataIndex: 'status',
+      title: 'Mobile',
+      dataIndex: 'mobile',
     },
+    {
+      title: 'Comment',
+      dataIndex: 'comment',
+    },
+    {
+      title: 'Status',
+      dataIndex: 'status',
+    },
+    {
+      title: 'Action',
+      dataIndex: 'action',
+    }
   ];
+ 
+const Enquiries = () => {
+
+  const dispatch = useDispatch();
+  useEffect(()=>{
+    dispatch(getEnq())  
+  },[])
+  const enquiryState = useSelector(state => state.enquiry.enquiry.newEnquiry);
+  console.log(enquiryState)
   const data = [];
-  for (let i = 0; i < 46; i++) {
+  
+  for (let i = 0; i < enquiryState?.length; i++) {
     data.push({
-      key: i,
-      name: `Edward King ${i}`,
-      status: "Watch",
-      product: `London, Park Lane no. ${i}`,
+      key: i+1,
+      title: enquiryState[i].name,
+      email:enquiryState[i].email,
+      mobile:enquiryState[i].mobile,
+      comment:enquiryState[i].comment,
+      status:enquiryState[i].status,
+      action:(
+        <>
+        <Link to="/" className='fs-3 text-success me-3'>
+          <BiEdit style={{fontSize:"20px"}}/>
+        </Link>
+        <Link to="/" className='fs-3 text-danger' >
+          <AiFillDelete style={{fontSize:"20px"}}/>
+        </Link>
+        </>
+      )
     });
   }
-
-const Enquiries = () => {
     return (
         <div>
             <h3 className='mb-4'>Enquiries</h3>

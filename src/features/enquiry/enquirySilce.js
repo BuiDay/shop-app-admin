@@ -1,13 +1,46 @@
-import axios from "axios";
-import {base_url} from "../../utils/base_url"
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import enqService from "./enquiryService";
 
-const getBrands = async () =>{
-    const response = await axios.get(`${base_url}brand`);
-    return response.data;
+export const getEnq = createAsyncThunk("enquiry/get-enquiry",async(thunkAPI)=>{
+    try{
+        return await enqService.getEnq()
+    }catch(err){
+       return thunkAPI.rejectWithValue(err)
+    }
+}) 
+
+const initialState = {
+    enquiry:"",
+    isError:false,
+    isLoading:false,
+    isSuccess:false,
+    message:"",
 }
 
-const brandService = {
-    getBrands,
-}
+export const enquirySlice = createSlice({
+    name:"enquiry",
+    initialState,
+    reducers:{},
+    extraReducers:(builder) =>{
+        builder
+        .addCase(getEnq.pending,(state)=>{
+            state.isLoading = true;
+        })
+        .addCase(getEnq.fulfilled,(state,action)=>{
+            state.isLoading = false;
+            state.isSuccess = true;
+            state.isError = false;  
+            state.enquiry = action.payload;
+        })
+        .addCase(getEnq.rejected,(state,action)=>{
+            state.isLoading = false;
+            state.isSuccess = false;
+            state.isError = true;
+            state.message = action.error;
+        })
+     
+    },
+})
 
-export default brandService;
+
+export default enquirySlice.reducer;
