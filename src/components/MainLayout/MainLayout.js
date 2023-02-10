@@ -5,6 +5,8 @@ import {
   MenuUnfoldOutlined,
 } from '@ant-design/icons';
 import { Layout, Menu, theme } from 'antd';
+import { ToastContainer} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import {AiOutlineDashboard, AiOutlineShoppingCart, AiOutlineUser,} from 'react-icons/ai'
 import {SiBrandfolder,SiBloglovin} from 'react-icons/si'
 import {BiCategoryAlt,BiColorFill} from 'react-icons/bi'
@@ -13,6 +15,8 @@ import {IoIosNotifications} from 'react-icons/io'
 import { Link, Outlet, useNavigate } from 'react-router-dom';
 import UserAvatar from '../../assets/images/avatar5.jpg'
 const { Header, Sider, Content } = Layout;
+
+
 
 
 const MainLayout = () => {
@@ -168,6 +172,18 @@ const MainLayout = () => {
               background: colorBgContainer,
             }}
           >
+            <ToastContainer 
+              position="top-right"
+              autoClose={250}
+              hideProgressBar={false}
+              newestOnTop={true}
+              closeOnClick
+              rtl={false}
+              pauseOnFocusLoss
+              draggable
+              pauseOnHover
+              theme="light"
+            />
             <Outlet />
           </Content>
         </Layout>

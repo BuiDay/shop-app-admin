@@ -5,13 +5,18 @@ import 'react-quill/dist/quill.snow.css';
 import CustomInput from '../common/CustomInput/CustomInput';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import { Select } from 'antd';
+import {toast} from 'react-toastify';
 import { getBrands } from '../features/brand/brandSilce';
 import { getProductCategories } from "../features/category/categorySilce"
+import {uploadImg,deleteImg} from '../features/upload/uploadSilce'
 import Dropzone from 'react-dropzone'
+import { createProduct } from '../features/product/productSilce';
+import { useNavigate } from 'react-router-dom';
 
 const AddProduct = () => {
-    const [brand, setBrand] = useState("")
     const dispatch = useDispatch();
+    const navigate = useNavigate()
     useEffect(()=>{
       dispatch(getBrands());
       dispatch(getProductCategories());
@@ -19,23 +24,56 @@ const AddProduct = () => {
   
     const brandState = useSelector(state => state.brand.brands);
     const productCategoriesState = useSelector(state => state.productCategories.productCategories);
+    const imgState = useSelector(state => state.images.images);
+    const newProduct = useSelector(state => state.product);
+    const {isSuccess, isError, isLoading,createProducts} = newProduct
+
+    useEffect(()=>{
+        if(isSuccess && createProducts ){
+            toast.success("Product added successfully")
+        }
+        if(isError){
+            toast.error("Something went wrong!")
+        }
+    },[isSuccess,isError,isLoading])
+
+    const img = []
+    useEffect(()=>{
+        imgState.forEach((i)=>{
+            img.push({
+                public_id:i.public_id,
+                url:i.url
+            })
+        })
+        formik.values.images =img
+    },[imgState])
 
     const formik = useFormik({
         initialValues: {
           title: '',
           description:'',
           price:'',
+          category:'',
+          brand:'',
+          color:'',
           quantity:'',
+          images:""
         },
         validationSchema: Yup.object({
             title: Yup.string().required('Title is Required'),
             description:Yup.string().required('Description is Required'),
-            price:Yup.string().required('Price is Required'),
+            price:Yup.number().required('Price is Required'),
+            category:Yup.string().required('Category is Required'),
+            brand:Yup.string().required('Brand is Required'),
+            color:Yup.string().required('Color is Required'),
             quantity:Yup.string().required('Quantity is Required'),
           }),
         onSubmit: values => {
-            // dispatch(login(values))
-            alert(JSON.stringify(values, null, 2));
+            dispatch(createProduct(values))
+            formik.resetForm();
+            setTimeout(()=>{
+                navigate("/admin/product-list")
+            },1000)
         },
       });
 
@@ -88,31 +126,64 @@ const AddProduct = () => {
                         }
                     </div>
                     
-                    <select name="" id="" className='form-control py-3 my-3'>
+                    <select name="brand" 
+                            id="" className='form-control py-3 my-3'
+                            onChange={formik.handleChange('brand')} 
+                            onBlur={formik.handleBlur('brand')} 
+                            value={formik.values.brand}>
                         <option value="">Select Brand</option>
                         {
                             brandState.map((item, index)=>{
                                 return(
-                                    <option key={index} value="">{item.title}</option>
+                                    <option key={index} value={item.title}>{item.title}</option>
                                 )
                             })
                         }
                     </select>
-                    <select name="" id="" className='form-control py-3 mb-3'>
+                    <div className="error">
+                        {
+                            formik.touched.brand && formik.errors.brand ? (
+                                <div>{formik.errors.brand}</div>
+                            ) : null
+                        }
+                    </div>
+                    <select name="category" id="" 
+                            className='form-control py-3 mb-3'
+                            onChange={formik.handleChange('category')} 
+                            onBlur={formik.handleBlur('category')} 
+                            value={formik.values.category}>
                         <option value="">Select Category</option>
                         {
                             productCategoriesState.map((item, index)=>{
                                 return(
-                                    <option key={index} value="">{item.title}</option>
+                                    <option key={index} value={item.title}>{item.title}</option>
                                 )
                             })
                         }
                     </select>
-                    <select name="" id="" className='form-control py-3 mb-3'>
+                    <div className="error">
+                        {
+                            formik.touched.category && formik.errors.category ? (
+                                <div>{formik.errors.category}</div>
+                            ) : null
+                        }
+                    </div>
+                    <select name="color" id="" 
+                            className='form-control py-3 mb-3'
+                            onChange={formik.handleChange('color')} 
+                            onBlur={formik.handleBlur('color')} 
+                            value={formik.values.color}>
                         <option value="">Select Color</option>
-                        <option value="">Red</option>
-                        <option value="">Yellow</option>
+                        <option value="Red">Red</option>
+                        <option value="Yellow">Yellow</option>
                     </select>
+                    <div className="error">
+                        {
+                            formik.touched.color && formik.errors.color ? (
+                                <div>{formik.errors.color}</div>
+                            ) : null
+                        }
+                    </div>
                     <CustomInput type="text" label="Enter Product Quantity" 
                         name="quantity" 
                         onChange={formik.handleChange('quantity')} 
@@ -127,7 +198,7 @@ const AddProduct = () => {
                         }
                     </div>
                    <div className='bg-white border-1 py-5 text-center mt-3'>
-                    <Dropzone onDrop={acceptedFiles => console.log(acceptedFiles)}>
+                    <Dropzone onDrop={acceptedFiles => dispatch(uploadImg(acceptedFiles))}>
                             {({getRootProps, getInputProps}) => (
                                 <section>
                                 <div {...getRootProps()}>
@@ -138,7 +209,23 @@ const AddProduct = () => {
                             )}
                         </Dropzone>
                    </div>
-                    <button className='btn btn-success border-0 rounded-3 my-4'  type="submit">
+                   <div className='showImage d-flex gap-3 mt-4'>
+                        {
+                            imgState?.map((item,index)=>{
+                                return(
+                                    <div key={index} className='position-relative' >
+                                        <button className='btn-close position-absolute'
+                                                type='button'
+                                                style={{top:"10px", right:"10px"}}
+                                                onClick={()=>dispatch(deleteImg(item.public_id))}
+                                        ></button>
+                                        <img src={item.url} width={200} height={200} alt="" />
+                                    </div>
+                                )
+                            })
+                        }
+                   </div>
+                    <button className='btn btn-success border-0 rounded-3 my-4' type="submit">
                         Add Product 
                     </button>
                 </form>                

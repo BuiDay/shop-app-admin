@@ -9,8 +9,18 @@ export const getBrands = createAsyncThunk("products/get-products",async(thunkAPI
     }
 })
 
+export const createBrand = createAsyncThunk("products/create-products",async(Data,thunkAPI)=>{
+    try{
+        return await brandService.createBrand(Data);
+    }catch(err){
+       return thunkAPI.rejectWithValue(err)
+    }
+})
+
+
 const initialState = {
     brands:[],
+    createBrands:"",
     isError:false,
     isLoading:false,
     isSuccess:false,
@@ -38,6 +48,21 @@ export const brandSlice = createSlice({
             state.isError = true;
             state.message = action.error;
             state.brands = [];
+        })
+        .addCase(createBrand.pending,(state)=>{
+            state.isLoading = true;
+        })
+        .addCase(createBrand.fulfilled,(state,action)=>{
+            state.isLoading = false;
+            state.isSuccess = true;
+            state.isError = false
+            state.createBrands = action.payload;
+        })
+        .addCase(createBrand.rejected,(state,action)=>{
+            state.isLoading = false;
+            state.isSuccess = false;
+            state.isError = true;
+            state.message = action.error;
         })
     },
 })
